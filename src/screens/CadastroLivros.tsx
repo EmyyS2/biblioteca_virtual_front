@@ -1,40 +1,69 @@
 import axios from "axios";
 import React, { useState } from "react";
-import {ScrollView, Image, StatusBar, StyleSheet, Text, TextInput,TouchableOpacity, View, ImageBackground } from "react-native";
-import Footer from "../components/Footer";
-import Head from "../components/Head";
+import {ScrollView, Image, StatusBar, StyleSheet, Text, TextInput,TouchableOpacity, View } from "react-native";
 
 const CadastroLivros: React.FC = () => {
     const [titulo, setTitulo] = useState<string>('');
     const [autor, setAutor] = useState<string>('');
     const [genero, setGenero] = useState<string>('');
-    const [data_lancamento, setDataLancamento] = useState<string>('');
+    const [data_de_lancamento, setDataDeLancamento] = useState<string>('');
     const [editora, setEditora] = useState<string>('');
     const [sinopse, setSinopse] = useState<string>('');
     const [avaliacao, setAvaliacao] = useState<string>('');
+    const [error, setErrors] = useState<string>('');
     const [imagem, setImagem] = useState<any>('');
 
-    const CadastroProduto = async () => {
+    const validateForm = () => {
+        const newErrors: any = {};
+   
+        if (!titulo) {
+          newErrors.titulo = "O campo título é obrigatório";
+        }
+        if (!autor) {
+          newErrors.autor= "O campo autor é obrigatório";
+        }
+        if (!data_de_lancamento) {
+          newErrors.data_de_lancamento= "O campo data de lançamento é obrigatório";
+        }
+        if (!editora) {
+          newErrors.editora= "O campo editora é obrigatório";
+        }
+        if (!sinopse) {
+          newErrors.sinopse = "O campo sinopse é obrigatório";
+        }
+        if (!genero) {
+          newErrors.genero= "O campo genero é obrigatório";
+        }
+        if (!avaliacao) {
+          newErrors.avaliacao= "O campo avaliacao é obrigatório";
+        }
+        if (!imagem) {
+            newErrors.avaliacao= "O campo  é obrigatório";
+          }
+        setErrors(newErrors);
+   
+        return !Object.keys(newErrors).length;
+      };
+
+    const cadastrar = async () => {
         try{
         const formData=new FormData();
         formData.append('titulo', titulo);
         formData.append('autor', autor);
         formData.append('genero', genero);
-        formData.append('data_lancamento', data_lancamento);
+        formData.append('data_de_lancamento', data_de_lancamento);
         formData.append('editora', editora);
         formData.append('sinopse', sinopse);
         formData.append('avaliacao', avaliacao);
-        formData.append('imagem',{
-            uri:imagem,
-            type:'image/jpeg',
-            name:new Date()+ '.jpg',
-        });
+        
 
-const response= await axios.post('http://10.137.11.217:8000/api/clientes', formData,{
+const response= await axios.post('http://10.137.11.218:8000/api/livros/cadastro', formData,{
     headers:{
         'Content-Type':'multipart/form-data'
     }
 });
+
+console.log(response.data)
         }catch(error){
             console.log(error);
         }
@@ -43,11 +72,12 @@ const response= await axios.post('http://10.137.11.217:8000/api/clientes', formD
     return (
         <View style={styles.container}>
             <StatusBar backgroundColor="#000000" barStyle="light-content" />
-            <ImageBackground source={require('../assets/images/Fundo.png')} resizeMode="cover" style={styles.container}></ImageBackground>
-<Head/>
+
             <View style={styles.header}>
             <Image source={require('../assets/images/Icon.png')} style={styles.headerIcon} />
             </View>
+
+            <ScrollView style={styles.scroll}>
 
             <View style={styles.form}>
 
@@ -76,8 +106,8 @@ const response= await axios.post('http://10.137.11.217:8000/api/clientes', formD
                 <TextInput
                     style={styles.input}
                     placeholder="Data de lançamento:"
-                    value={data_lancamento}
-                    onChangeText={setDataLancamento}
+                    value={data_de_lancamento}
+                    onChangeText={setDataDeLancamento}
                     multiline />
 
                 <TextInput
@@ -100,22 +130,38 @@ const response= await axios.post('http://10.137.11.217:8000/api/clientes', formD
                     value={avaliacao}
                     onChangeText={setAvaliacao}
                     multiline />
+
+                <TouchableOpacity style={styles.button} onPress={cadastrar}>
+                    <Text style={styles.buttonText}>Cadastrar</Text>
+                </TouchableOpacity>
                     
                 <Text style={styles.linhaTitle}>◎━━━━━━━━━━━━━━━━◎.◈.◎━━━━━━━━━━━━━━━◎</Text>
+                    
+                <View style={styles.footer}>
 
-                    <Footer/>
-               
-               
-              
-
+                
                 </View>
             </View>
+            </ScrollView>
+        </View>
     );
 }
 
 const styles = StyleSheet.create({
     container: {
+        backgroundColor: '#C0C0C0' ,
         flex: 1
+    },
+    footer: {
+        backgroundColor: '#C0C0C0',
+        flexDirection: "row",
+        justifyContent: 'space-around',
+        alignItems: 'center',
+        paddingVertical: 10
+    },
+    footerIcon: {
+        height: 40,
+        width: 40
     },
     header: {
         backgroundColor: '#C0C0C0',
@@ -123,14 +169,14 @@ const styles = StyleSheet.create({
         paddingVertical: 30,
     },
     headerIcon: {
-        width: 300,
-        height: 300,
-        marginBottom: -90,
-        marginTop: -90
+        width: 200,
+        height: 200,
+        marginBottom: -60,
+        marginTop: -60
     },
     form: {
         padding: 10,
-       
+        backgroundColor: '#C0C0C0',
         borderRadius: 10,
     },
     input: {
@@ -167,7 +213,7 @@ const styles = StyleSheet.create({
         alignItems: 'center'
     },
     button: {
-        backgroundColor: '#FFF',
+        backgroundColor: '#2C7DA0',
         padding: 10,
         borderRadius: 5,
         alignItems: 'center'
@@ -179,6 +225,9 @@ const styles = StyleSheet.create({
     linhaTitle: {
         color:'#2C7DA0',
         marginTop: 10
+    },
+    scroll: {
+
     }
 });
 

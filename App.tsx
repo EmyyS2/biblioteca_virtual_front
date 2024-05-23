@@ -1,13 +1,13 @@
 import React from 'react';
 import CadastroLivros from './src/screens/CadastroLivros';
-import ListagemLivros from './src/screens/Livros';
 import EdicaoLivros from './src/screens/EdicaoLivros';
+import Listagem from './src/screens/Livros';
 
 function App(): JSX.Element{
   return(
-  <CadastroLivros/>
+  //<CadastroLivros/>
   //<EdicaoLivros/>
-  //<ListagemLivros/>
+ <Listagem/>
   );
 }
 export default App;
