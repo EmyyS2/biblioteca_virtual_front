@@ -1,81 +1,161 @@
-
-import React,{useEffect,useState} from "react";
-import { Button, StatusBar,StyleSheet,Text,TouchableOpacity,View, Image } from "react-native";
-import { TextInput } from "react-native-gesture-handler";
+import { useNavigation, useRoute } from "@react-navigation/native";
+import { useEffect, useState } from "react"
+import { ImageBackground, StatusBar, StyleSheet, TouchableOpacity, View } from "react-native";
+/* import { Image, Text, View } from "react-native-reanimated/lib/typescript/Animated";*/
 import Head from "../components/Head";
+import { ScrollView, TextInput } from "react-native-gesture-handler";
 import Footer from "../components/Footer";
+import CadastroLivros from "./CadastroLivros";
 
+const EdicaoLivros: React.FC = ()=>{
 
-interface EdicaoLivro{
-    id:number;
-    titulo:string;
-    autor:string;
-    data_de_lancamento:string;
-    editora:string;
-    sinopse:string;
-    genero:string;
-    avaliacao:string;
-}
+    const [titulo, setTitulo]=useState<string>('');
+    const[autor, setAutor]=useState<string>('');
+    const [data_de_lancamento,setDataDeLancamento]=useState<string>('');
+    const [editora,setEditora]=useState<string>('');
+    const[sinopse,setSinopse]=useState<string>('');
+    const[genero,setGenero]=useState<string>('');
+    const[avaliacao,setAvaliacao]=useState<string>('');
 
-const EdicaoLivro: React.FC=()=>{
-    const [titulo, setTitulo]= useState<string>('');
-    const [autor, setAutor]= useState<string>('');
-    const [data_de_lancamento, setData_de_lancamento]= useState<string>('');
-    const [editora, setEditora]= useState<string>('');
-    const [sinopse, setSinopse]= useState<string>('');
-    const [genero, setGenero]= useState<string>('');
-    const [avaliacao, setAvaliacao]= useState<string>('');
+    const navigation = useNavigation();
+    const route = useRoute();
 
+    useEffect(()=>{
+        const {Livro} = route.params;
+        setTitulo(Livro.titulo);
+        setAutor(Livro.autor);
+        setDataDeLancamento(Livro.data_de_lancamento);
+        setEditora(Livro.editora);
+        setSinopse(Livro.sinopse);
+        setGenero(Livro.genero);
+        setAvaliacao(Livro.avaliacao)
+    })
+    return (
+        <View style={styles.container}>
+            <ImageBackground source={require('../assets/images/fundo.png')}  style={styles.background}/>
+            
+          
+            <StatusBar backgroundColor="#000000" barStyle="light-content" />
+            <Head/>
 
-    return(
-        <View  style={styles.container}>
-            <StatusBar backgroundColor="#000000" barStyle="light-content"/>
-             
             <View style={styles.header}>
             <Image source={require('../assets/images/Icon.png')} style={styles.headerIcon} />
             </View>
 
-             <View style={styles.form}>
-                <TextInput style={styles.input} value={titulo} onChangeText={setTitulo}/>
+            <ScrollView style={styles.scroll}>
 
-                <TextInput style={styles.input} value={autor} onChangeText={setAutor} multiline/>
+            <View style={styles.form}>
 
-                <TextInput style={styles.input} value={data_de_lancamento} onChangeText={setData_de_lancamento} keyboardType="numeric"/>
+                <TextInput
+                    style={styles.input}
+                    placeholder="Título:"
+                    value={titulo}
+                    onChangeText={setTitulo}/>
 
-                <TextInput style={styles.input} value={editora} onChangeText={setEditora} multiline/>
+                <TextInput
+                    style={styles.input}
+                    placeholder="Autor:"
+                    value={autor}
+                    onChangeText={setAutor}/>
 
-                <TextInput style={styles.input} value={sinopse} onChangeText={setSinopse} multiline/>
+                <TextInput
+                    style={styles.inputGenero}
+                    placeholder="Gênero:"
+                    value={genero}
+                    onChangeText={setGenero}
+                    multiline />
+                    
+                <TextInput
+                    style={styles.inputDT}
+                    placeholder="Data:"
+                    value={data_de_lancamento}
+                    onChangeText={setDataDeLancamento}
+                    multiline />
 
-                <TextInput style={styles.input} value={genero} onChangeText={setGenero} multiline/>
+                <TextInput
+                    style={styles.input}
+                    placeholder="Editora:"
+                    value={editora}
+                    onChangeText={setEditora}
+                    multiline />
 
-                <TextInput style={styles.input} value={avaliacao} onChangeText={setAvaliacao} multiline/>
-            <View style={styles.menuList}></View>
-            <Footer />
+                <TextInput
+                    style={styles.input}
+                    placeholder="Sinopse:"
+                    value={sinopse}
+                    onChangeText={setSinopse}
+                    multiline />
+
+                <TextInput
+                    style={styles.input}
+                    placeholder="Avaliação:"
+                    value={avaliacao}
+                    onChangeText={setAvaliacao}
+                    multiline />
+
+                <View style={styles.menuList}></View>
+            
+                    
+                <Text style={styles.linhaTitle}>◎━━━━━━━━━━━━━━━━◎.◈.◎━━━━━━━━━━━━━━━◎</Text>
+                
+                <View>
+
+                </View>
+                <View style={styles.menuList}></View>
+            <Footer/>
             </View>
+            </ScrollView>
         </View>
     );
 }
 
 const styles = StyleSheet.create({
+    background:{
+        height:1000,
+        flex:1
+    },
     container: {
-        backgroundColor: '#C0C0C0' ,
-        flex: 1
+      
+        flex: 1,
+    },
+    inputGenero: {
+        fontWeight: 'bold',
+        height: 50,
+        borderWidth: 3,
+        borderColor: '#2C7DA0',
+        marginBottom: 5,
+        paddingHorizontal: 10,
+        borderRadius: 10,
+        marginTop: 10,
+        width:'52%'
+    },
+    inputDT: {
+        fontWeight: 'bold',
+        height: 50,
+        borderWidth: 3,
+        borderColor: '#2C7DA0',
+        marginBottom: 5,
+        paddingHorizontal: 10,
+        borderRadius: 10,
+        marginTop: -55,
+        width:'40%',
+        marginLeft:220
+    },
+    menuList: {
+        flexGrow: 1
     },
     header: {
-        backgroundColor: '#C0C0C0',
         alignItems: 'center',
-        paddingVertical: 30,
+        paddingVertical: 30
     },
     headerIcon: {
-        width: 300,
-        height: 300,
+        width: 250,
+        height: 250,
         marginBottom: -80,
         marginTop: -80
     },
     form: {
         padding: 10,
-        backgroundColor: '#C0C0C0',
-        borderRadius: 10,
     },
     input: {
         fontWeight: 'bold',
@@ -85,10 +165,10 @@ const styles = StyleSheet.create({
         marginBottom: 10,
         paddingHorizontal: 10,
         borderRadius: 10,
-        marginTop: 10
+        marginTop: 5
     },
     imageButton: {
-        backgroundColor: '#000000',
+      
         padding: 10,
         borderRadius: 10,
         alignItems: 'center',
@@ -111,21 +191,25 @@ const styles = StyleSheet.create({
         alignItems: 'center'
     },
     button: {
-        backgroundColor: '#FFF',
+        backgroundColor: '#2C7DA0',
         padding: 10,
         borderRadius: 5,
-        alignItems: 'center'
+        alignItems: 'center',
+        marginTop: 40,
+        marginBottom: -20
     },
     buttonText: {
         color: '#FFF',
         fontWeight: 'bold',
     },
     linhaTitle: {
-        color:'#FFF',
+        color:'#2C7DA0',
+        marginBottom: -45,
+        marginTop: 40
     },
-    menuList:{
-        flexGrow: 1
+    scroll: {
+
     }
 });
 
-export default EdicaoLivro;
+export default EdicaoLivros;

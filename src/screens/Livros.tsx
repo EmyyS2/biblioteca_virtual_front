@@ -3,6 +3,8 @@ import axios from "axios";
 import { Image, StyleSheet, Text, TouchableOpacity, StatusBar, FlatList, View, TextInput } from "react-native";
 import Footer from "../components/Footer";
 import Head from "../components/Head";
+import EdicaoLivros from "./EdicaoLivros";
+import { useNavigation } from "@react-navigation/native";
 
 
 
@@ -38,7 +40,7 @@ function Listagem(): React.JSX.Element {
             <Text style={styles.textAvaliacao}>{item.avaliacao}</Text>
         </TouchableOpacity>    
     );
-    
+    const navigation = useNavigation();
 
     return (
         <View style={styles.container}>

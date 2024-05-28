@@ -1,6 +1,8 @@
 import axios from "axios";
 import React, { useState } from "react";
-import {ScrollView, Image, StatusBar, StyleSheet, Text, TextInput,TouchableOpacity, View } from "react-native";
+import {ScrollView, Image, StatusBar, StyleSheet, Text, TextInput,TouchableOpacity, View, ImageBackground } from "react-native";
+import Footer from "../components/Footer";
+import Head from "../components/Head";
 
 const CadastroLivros: React.FC = () => {
     const [titulo, setTitulo] = useState<string>('');
@@ -23,7 +25,7 @@ const CadastroLivros: React.FC = () => {
           newErrors.autor= "O campo autor é obrigatório";
         }
         if (!data_de_lancamento) {
-          newErrors.data_de_lancamento= "O campo data de lançamento é obrigatório";
+          newErrors.data_lancamento= "O campo data de lançamento é obrigatório";
         }
         if (!editora) {
           newErrors.editora= "O campo editora é obrigatório";
@@ -35,17 +37,14 @@ const CadastroLivros: React.FC = () => {
           newErrors.genero= "O campo genero é obrigatório";
         }
         if (!avaliacao) {
-          newErrors.avaliacao= "O campo avaliacao é obrigatório";
+          newErrors.avaliacao= "O campo avaliacaoé obrigatório";
         }
-        if (!imagem) {
-            newErrors.avaliacao= "O campo  é obrigatório";
-          }
         setErrors(newErrors);
    
         return !Object.keys(newErrors).length;
       };
 
-    const cadastrar = async () => {
+    const CadastroLivros = async () => {
         try{
         const formData=new FormData();
         formData.append('titulo', titulo);
@@ -55,15 +54,17 @@ const CadastroLivros: React.FC = () => {
         formData.append('editora', editora);
         formData.append('sinopse', sinopse);
         formData.append('avaliacao', avaliacao);
-        
+        formData.append('imagem',{
+            uri:imagem,
+            type:'image/jpeg',
+            name:new Date()+ '.jpg',
+        });
 
 const response= await axios.post('http://10.137.11.218:8000/api/livros/cadastro', formData,{
     headers:{
         'Content-Type':'multipart/form-data'
     }
 });
-
-console.log(response.data)
         }catch(error){
             console.log(error);
         }
@@ -71,7 +72,11 @@ console.log(response.data)
 
     return (
         <View style={styles.container}>
+            <ImageBackground source={require('../assets/images/fundo.png')}  style={styles.background}/>
+            
+          
             <StatusBar backgroundColor="#000000" barStyle="light-content" />
+            <Head/>
 
             <View style={styles.header}>
             <Image source={require('../assets/images/Icon.png')} style={styles.headerIcon} />
@@ -81,10 +86,7 @@ console.log(response.data)
 
             <View style={styles.form}>
 
-            <Text style={styles.linhaTitle}>◎━━━━━━━━━━━━━━━━◎.◈.◎━━━━━━━━━━━━━━━◎</Text>
-
-
-            <TextInput
+                <TextInput
                     style={styles.input}
                     placeholder="Título:"
                     value={titulo}
@@ -97,15 +99,15 @@ console.log(response.data)
                     onChangeText={setAutor}/>
 
                 <TextInput
-                    style={styles.input}
+                    style={styles.inputGenero}
                     placeholder="Gênero:"
                     value={genero}
                     onChangeText={setGenero}
                     multiline />
                     
                 <TextInput
-                    style={styles.input}
-                    placeholder="Data de lançamento:"
+                    style={styles.inputDT}
+                    placeholder="Data:"
                     value={data_de_lancamento}
                     onChangeText={setDataDeLancamento}
                     multiline />
@@ -131,16 +133,20 @@ console.log(response.data)
                     onChangeText={setAvaliacao}
                     multiline />
 
-                <TouchableOpacity style={styles.button} onPress={cadastrar}>
+                <TouchableOpacity style={styles.button} onPress={CadastroLivros}>
                     <Text style={styles.buttonText}>Cadastrar</Text>
                 </TouchableOpacity>
+
+                <View style={styles.menuList}></View>
+            
                     
                 <Text style={styles.linhaTitle}>◎━━━━━━━━━━━━━━━━◎.◈.◎━━━━━━━━━━━━━━━◎</Text>
-                    
-                <View style={styles.footer}>
-
                 
+                <View>
+
                 </View>
+                <View style={styles.menuList}></View>
+            <Footer/>
             </View>
             </ScrollView>
         </View>
@@ -148,38 +154,15 @@ console.log(response.data)
 }
 
 const styles = StyleSheet.create({
+    background:{
+        height:1000,
+        flex:1
+    },
     container: {
-        backgroundColor: '#C0C0C0' ,
-        flex: 1
+      
+        flex: 1,
     },
-    footer: {
-        backgroundColor: '#C0C0C0',
-        flexDirection: "row",
-        justifyContent: 'space-around',
-        alignItems: 'center',
-        paddingVertical: 10
-    },
-    footerIcon: {
-        height: 40,
-        width: 40
-    },
-    header: {
-        backgroundColor: '#C0C0C0',
-        alignItems: 'center',
-        paddingVertical: 30,
-    },
-    headerIcon: {
-        width: 200,
-        height: 200,
-        marginBottom: -60,
-        marginTop: -60
-    },
-    form: {
-        padding: 10,
-        backgroundColor: '#C0C0C0',
-        borderRadius: 10,
-    },
-    input: {
+    inputGenero: {
         fontWeight: 'bold',
         height: 50,
         borderWidth: 3,
@@ -187,10 +170,49 @@ const styles = StyleSheet.create({
         marginBottom: 5,
         paddingHorizontal: 10,
         borderRadius: 10,
-        marginTop: 10
+        marginTop: 10,
+        width:'52%'
+    },
+    inputDT: {
+        fontWeight: 'bold',
+        height: 50,
+        borderWidth: 3,
+        borderColor: '#2C7DA0',
+        marginBottom: 5,
+        paddingHorizontal: 10,
+        borderRadius: 10,
+        marginTop: -55,
+        width:'40%',
+        marginLeft:220
+    },
+    menuList: {
+        flexGrow: 1
+    },
+    header: {
+        alignItems: 'center',
+        paddingVertical: 30
+    },
+    headerIcon: {
+        width: 250,
+        height: 250,
+        marginBottom: -80,
+        marginTop: -80
+    },
+    form: {
+        padding: 10,
+    },
+    input: {
+        fontWeight: 'bold',
+        height: 50,
+        borderWidth: 3,
+        borderColor: '#2C7DA0',
+        marginBottom: 10,
+        paddingHorizontal: 10,
+        borderRadius: 10,
+        marginTop: 5
     },
     imageButton: {
-        backgroundColor: '#000000',
+      
         padding: 10,
         borderRadius: 10,
         alignItems: 'center',
@@ -216,7 +238,9 @@ const styles = StyleSheet.create({
         backgroundColor: '#2C7DA0',
         padding: 10,
         borderRadius: 5,
-        alignItems: 'center'
+        alignItems: 'center',
+        marginTop: 40,
+        marginBottom: -20
     },
     buttonText: {
         color: '#FFF',
@@ -224,7 +248,8 @@ const styles = StyleSheet.create({
     },
     linhaTitle: {
         color:'#2C7DA0',
-        marginTop: 10
+        marginBottom: -45,
+        marginTop: 40
     },
     scroll: {
 

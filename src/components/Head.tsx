@@ -10,20 +10,19 @@ function Head(): React.JSX.Element{
      </View>
     );
 }
-
 const styles= StyleSheet.create({
     container:{
         flex:1
     },
     header:{
-        backgroundColor:'#EEF0F2',
         paddingVertical:10,
-        alignItems:'center'
+        alignItems:'center',
+        marginTop: 35
     },
     headerText:{
-        fontSize:20,
+        fontSize:25,
         fontWeight:'bold',
-        color:'white'
+        color:'#2C7DA0'
     }
 });
 

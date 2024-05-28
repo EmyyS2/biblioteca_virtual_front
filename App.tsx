@@ -6,8 +6,8 @@ import Listagem from './src/screens/Livros';
 function App(): JSX.Element{
   return(
   //<CadastroLivros/>
-  //<EdicaoLivros/>
- <Listagem/>
+  <EdicaoLivros/>
+ //<Listagem/>
   );
 }
 export default App;
