@@ -37,6 +37,7 @@ function Listagem(): React.JSX.Element {
             <Text style={styles.textSinopse}>{item.sinopse}</Text>
             <Text style={styles.textGenero}>{item.genero}</Text>
             <Text style={styles.textAvaliacao}>{item.avaliacao}</Text>
+
         </TouchableOpacity>    
     );
     
@@ -85,8 +86,9 @@ const styles = StyleSheet.create({
       marginTop: 40
   },
      scroll: {},
+
      background:{
-      height:1000,
+      height:760,
       flex:1
     },
      button: {},

@@ -25,7 +25,7 @@ const CadastroLivros: React.FC = () => {
           newErrors.autor= "O campo autor é obrigatório";
         }
         if (!data_de_lancamento) {
-          newErrors.data_lancamento= "O campo data de lançamento é obrigatório";
+          newErrors.data_de_lancamento= "O campo data de lançamento é obrigatório";
         }
         if (!editora) {
           newErrors.editora= "O campo editora é obrigatório";
@@ -37,7 +37,7 @@ const CadastroLivros: React.FC = () => {
           newErrors.genero= "O campo genero é obrigatório";
         }
         if (!avaliacao) {
-          newErrors.avaliacao= "O campo avaliacaoé obrigatório";
+          newErrors.avaliacao= "O campo avaliacao é obrigatório";
         }
         setErrors(newErrors);
    
@@ -156,7 +156,7 @@ const response= await axios.post('http://10.137.11.215:8000/api/livros/cadastro'
 
 const styles = StyleSheet.create({
     background:{
-        height:1000,
+        height:760,
         flex:1
     },
     container: {
