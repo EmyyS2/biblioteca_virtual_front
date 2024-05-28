@@ -60,9 +60,10 @@ const CadastroLivros: React.FC = () => {
             name:new Date()+ '.jpg',
         });
 
-const response= await axios.post('http://10.137.11.218:8000/api/livros/cadastro', formData,{
+const response= await axios.post('http://10.137.11.215:8000/api/livros/cadastro', formData,{
     headers:{
         'Content-Type':'multipart/form-data'
+    
     }
 });
         }catch(error){

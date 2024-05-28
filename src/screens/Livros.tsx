@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { Image, StyleSheet, Text, TouchableOpacity, StatusBar, FlatList, View, TextInput } from "react-native";
+import { Image, StyleSheet, Text, TouchableOpacity, StatusBar, FlatList, View, TextInput, ImageBackground } from "react-native";
 import Footer from "../components/Footer";
 import Head from "../components/Head";
-import EdicaoLivros from "./EdicaoLivros";
-import { useNavigation } from "@react-navigation/native";
+import { ScrollView } from "react-native-gesture-handler";
+import HeadListagem from "../components/HeadListagem";
 
 
 
@@ -17,7 +17,7 @@ function Listagem(): React.JSX.Element {
     useEffect(() => {
         async function fetchData() {
             try {
-                const response = await axios.get('http://10.137.11.218/biblioteca_virtual/public/api/livros/visualizar');
+                const response = await axios.get('http://10.137.11.215/livros/visualizar');
                 setProduto(response.data.dados);
              } catch (error) {
                 setErro("Ocorreu um erro");
@@ -31,7 +31,6 @@ function Listagem(): React.JSX.Element {
     const renderItem = ({ item }: { item: Livro }) => (
         <TouchableOpacity style={styles.item}>
             <Text style={styles.textTitulo}>{item.titulo}</Text>
-            <Text style={styles.linha}>━━━━━━━━━━ •๋࣭ ⭑🕸🦇🕸๋࣭ ⭑• ━━━━━━━━━━</Text>
             <Text style={styles.textAutor}>{item.autor}</Text>
             <Text style={styles.textData}>{item.data_de_lancamento}</Text>
             <Text style={styles.textEditora}>{item.editora}</Text>
@@ -40,17 +39,24 @@ function Listagem(): React.JSX.Element {
             <Text style={styles.textAvaliacao}>{item.avaliacao}</Text>
         </TouchableOpacity>    
     );
-    const navigation = useNavigation();
+    
 
     return (
-        <View style={styles.container}>
-            <StatusBar backgroundColor='#640d14' barStyle='light-content' />
+        
+            <View style={styles.container}>
+
+              <ImageBackground source={require('../assets/images/fundo.png')}  style={styles.background}/>
+            <StatusBar backgroundColor='#000000' barStyle='light-content' />
+            <HeadListagem/>
+
+
             <View style={styles.header}>
             <Image source={require('../assets/images/Icon.png')} style={styles.headerIcon} />
             </View>
 
             <View style={styles.alinhapesquisa} >
                 <Image style={styles.pesquisaicon} source={require('../assets/images/lupinha.png')} />
+                
                 <TextInput style={styles.pesquisa} placeholder="Pesquisar..." />
             </View>
 
@@ -58,10 +64,11 @@ function Listagem(): React.JSX.Element {
                 showsVerticalScrollIndicator={false}
                 data={produto}
                 renderItem={renderItem}
-                keyExtractor={(item) => item.id.toString()}
+                keyExtractor={(item) => item.titulo.toString()}
             />
-            
+            <Text style={styles.linhaTitle}>◎━━━━━━━━━━━━━━━━━◎.◈.◎━━━━━━━━━━━━━━━◎</Text>
 
+            <Footer/>
             </View>
 
     );
@@ -70,25 +77,29 @@ function Listagem(): React.JSX.Element {
 
 const styles = StyleSheet.create({
     container: {
-         backgroundColor: '#000000' ,
          flex: 1
      },
-     button: {
-         
-     },
-     header: {
-        backgroundColor: '#5B1824',
-        alignItems: 'center',
-        paddingVertical: 50,
-
-
+     linhaTitle: {
+      color:'#2C7DA0',
+      marginBottom: -45,
+      marginTop: 40
+  },
+     scroll: {},
+     background:{
+      height:1000,
+      flex:1
     },
-     headerIcon: {
-         width: 300,
-         height: 300,
-         marginBottom: -90,
-         marginTop: -90
-     },
+     button: {},
+     header: {
+      alignItems: 'center',
+      paddingVertical: 30
+  },
+    headerIcon: {
+      width: 250,
+      height: 250,
+      marginBottom: -20,
+      marginTop: -100
+  },
      item: {
         backgroundColor: '#C0C0C0',
         padding: 19,
@@ -152,14 +163,14 @@ const styles = StyleSheet.create({
      },
      pesquisa: {
         fontSize: 13,
-        backgroundColor: '#FFFAE5',
         borderWidth: 3,
-        borderColor: '#38040e',
+        borderColor: '#2C7DA0',
         borderRadius: 100,
         alignItems: 'center',
-        width: '75%',
-        paddingLeft: 50
-
+        width: '78%',
+        paddingLeft: 50,
+        marginTop: -50,
+        marginLeft: -10
     },
     alinhapesquisa: {
         alignItems: 'center',
@@ -168,9 +179,9 @@ const styles = StyleSheet.create({
         marginTop:20,
     },
     pesquisaicon: {
-        paddingLeft: 10,
-        width: 40,
-        height: 40
+        width: 90,
+        height: 90,
+        marginTop: -40
     },
     linha: {
         color: 'white',
@@ -180,4 +191,3 @@ const styles = StyleSheet.create({
     },
  });
  export default Listagem;
-            
