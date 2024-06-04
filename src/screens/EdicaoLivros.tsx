@@ -5,6 +5,18 @@ import Head from "../components/Head";
 import Footer from "../components/Footer";
 import CadastroLivros from "./CadastroLivros";
 
+
+interface Livros{
+    id: string;
+    titulo:string;
+    autor:string;
+    data_de_lancamento:string;
+    editora:string;
+    sinopse:string;
+    genero:string;
+    avaliacao:string;
+  
+}
 const EdicaoLivros: React.FC = () => {
 
     const [titulo, setTitulo] = useState<string>('');
@@ -15,6 +27,20 @@ const EdicaoLivros: React.FC = () => {
     const [genero, setGenero] = useState<string>('');
     const [avaliacao, setAvaliacao] = useState<string>('');
 
+
+    const navigation = useNavigation();
+    const route = useRoute();
+
+    useEffect(() => {
+        const { Livros } = route.params;
+            setTitulo(Livros.titulo);
+            setAutor(Livros.autor);
+            setDataDeLancamento(Livros.data_de_lancamento);
+            setEditora(Livros.editora)
+            setSinopse(Livros.sinopse)
+            setGenero(Livros.genero)
+            setAvaliacao(Livros.avaliacao)
+    })
 
     return (
         <View style={styles.container}>

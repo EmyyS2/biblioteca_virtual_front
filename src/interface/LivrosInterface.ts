@@ -9,3 +9,4 @@ interface Livro{
     avaliacao:string;
   
 }
+export default Livro;
