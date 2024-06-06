@@ -6,6 +6,7 @@ import Head from "../components/Head";
 import { ScrollView } from "react-native-gesture-handler";
 import HeadListagem from "../components/HeadListagem";
 import EdicaoLivros from "./EdicaoLivros";
+import { useNavigation } from "@react-navigation/native";
 
 interface Livro {
     id: string;
@@ -18,6 +19,7 @@ interface Livro {
     avaliacao: string;
 
 }
+const navigation = useNavigation();
 const renderItem = ({ item }: { item: Livro }) => (
     <TouchableOpacity style={styles.item}>
         <Text style={styles.textTitulo}>{item.titulo}</Text>
@@ -27,7 +29,7 @@ const renderItem = ({ item }: { item: Livro }) => (
         <Text style={styles.textSinopse}>{item.sinopse}</Text>
         <Text style={styles.textGenero}>{item.genero}</Text>
         <Text style={styles.textAvaliacao}>{item.avaliacao}</Text>
-        <TouchableOpacity style={styles.button} onPress={EdicaoLivros}>
+        <TouchableOpacity style={styles.button} onPress={()=>navigation.navigate('Cadastro')}>
                         <Text style={styles.buttonText}>Editar</Text>
                     </TouchableOpacity>
 

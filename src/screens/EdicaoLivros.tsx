@@ -104,14 +104,10 @@ const EdicaoLivros: React.FC = () => {
                         value={avaliacao}
                         onChangeText={setAvaliacao}
                         multiline />
-
-
-                    <TouchableOpacity style={styles.button} onPress={EdicaoLivros}>
-                        <Text style={styles.buttonText}>Salvar Edição</Text>
-                    </TouchableOpacity>
-                    <View style={styles.menuList}></View>
-
-
+ <TouchableOpacity style={styles.button}
+                    onPress={() => navigation.goBack()}>
+                    <Text style={styles.buttonText}>Voltar</Text>
+                </TouchableOpacity>
                     <Text style={styles.linhaTitle}>◎━━━━━━━━━━━━━━━━◎.◈.◎━━━━━━━━━━━━━━━◎</Text>
 
                     <View>

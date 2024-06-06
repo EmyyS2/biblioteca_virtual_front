@@ -2,8 +2,7 @@ import axios from "axios";
 import React, { useState } from "react";
 import { ScrollView, Image, StatusBar, StyleSheet, Text, TextInput, TouchableOpacity, View, ImageBackground } from "react-native";
 import Footer from "../components/Footer";
-import Head from "../components/Head";
-import HeadCadastro from "../components/headCadastro";
+import HeadCadastro from "../components/HeadCadastro";
 
 const CadastroLivros: React.FC = () => {
     const [titulo, setTitulo] = useState<string>('');
