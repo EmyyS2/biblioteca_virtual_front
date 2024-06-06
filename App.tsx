@@ -14,7 +14,7 @@ function App(): JSX.Element{
     <Stack.Navigator>
     <Stack.Screen name='Cadastro' component={CadastroLivros} options={{ headerShown: false }} />
     <Stack.Screen name='Listagem' component={Listagem} options={{ headerShown: false }} />
-    <Stack.Screen name='EditarProduto' component={EdicaoLivros} options={{ headerShown: false }} />
+    <Stack.Screen name='Editar' component={EdicaoLivros} options={{ headerShown: false }} />
     </Stack.Navigator>
   </NavigationContainer>
   )

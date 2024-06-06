@@ -29,7 +29,7 @@ const renderItem = ({ item }: { item: Livro }) => (
         <Text style={styles.textSinopse}>{item.sinopse}</Text>
         <Text style={styles.textGenero}>{item.genero}</Text>
         <Text style={styles.textAvaliacao}>{item.avaliacao}</Text>
-        <TouchableOpacity style={styles.button} onPress={()=>navigation.navigate('Cadastro')}>
+        <TouchableOpacity style={styles.button} onPress={()=>navigation.navigate('Editar')}>
                         <Text style={styles.buttonText}>Editar</Text>
                     </TouchableOpacity>
 
@@ -186,14 +186,14 @@ const styles = StyleSheet.create({
         marginTop: 5,
     },
     textSinopse: {
-        fontSize: 25,
+        fontSize: 29,
         color: '#00000',
         fontStyle: 'italic',
         fontWeight: 'bold',
         marginTop: 5,
     },
     textAvaliacao: {
-        fontSize: 20,
+        fontSize: 15,
         color: '#00000',
         fontStyle: 'italic',
         fontWeight: 'bold',
