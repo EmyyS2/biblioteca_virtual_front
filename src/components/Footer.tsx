@@ -6,8 +6,12 @@ function  Footer(): React.JSX.Element{
     const navigation = useNavigation();
     return(
         <View style={styles.footer}>
-   <TouchableOpacity onPress={()=>navigation.navigate('Cadastro')}  >
+   <TouchableOpacity  >
   <Image source={require('../assets/images/usuarioicon.png')}style={styles.footerIcon}/>
+   </TouchableOpacity >
+
+   <TouchableOpacity onPress={()=>navigation.navigate('Cadastro')}  >
+  <Image source={require('../assets/images/escrever.png')}style={styles.footerIcon}/>
    </TouchableOpacity >
 
    <TouchableOpacity onPress={()=>navigation.navigate('Listagem')}>
