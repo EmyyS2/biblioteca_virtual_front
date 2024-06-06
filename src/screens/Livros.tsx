@@ -5,6 +5,7 @@ import Footer from "../components/Footer";
 import Head from "../components/Head";
 import { ScrollView } from "react-native-gesture-handler";
 import HeadListagem from "../components/HeadListagem";
+import EdicaoLivros from "./EdicaoLivros";
 
 interface Livro {
     id: string;
@@ -26,6 +27,9 @@ const renderItem = ({ item }: { item: Livro }) => (
         <Text style={styles.textSinopse}>{item.sinopse}</Text>
         <Text style={styles.textGenero}>{item.genero}</Text>
         <Text style={styles.textAvaliacao}>{item.avaliacao}</Text>
+        <TouchableOpacity style={styles.button} onPress={EdicaoLivros}>
+                        <Text style={styles.buttonText}>Editar</Text>
+                    </TouchableOpacity>
 
     </TouchableOpacity>    
 );
@@ -37,7 +41,7 @@ function Listagem(): React.JSX.Element {
     useEffect(() => {
         async function fetchData() {
             try {
-                const response = await axios.get('http://10.137.11.218:8000/api/livros/visualizar');
+                const response = await axios.get('http://10.137.11.218/biblioteca_virtual/public/api/livros/visualizar');
                 setLivro(response.data);
 
                 console.log(livro)
@@ -49,6 +53,7 @@ function Listagem(): React.JSX.Element {
 
         fetchData();
     }, []);
+    console.log(renderItem);
 
 
     return (
@@ -74,7 +79,8 @@ function Listagem(): React.JSX.Element {
                 showsVerticalScrollIndicator={false}
                 data={livro}
                 renderItem={renderItem}
-               
+                keyExtractor={(item) => item.id ? item.id.toString() : Math.random().toString()}
+                contentContainerStyle={styles.menuList}
             />
             <Text style={styles.linhaTitle}>◎━━━━━━━━━━━━━━━━━◎.◈.◎━━━━━━━━━━━━━━━◎</Text>
 
@@ -100,7 +106,17 @@ const styles = StyleSheet.create({
         height: 760,
         flex: 1
     },
-    button: {},
+    imageButton: {
+
+        padding: 10,
+        borderRadius: 10,
+        alignItems: 'center',
+        marginBottom: 5,
+    },
+    imageButtonText: {
+        color: '#FFF',
+        fontWeight: 'bold',
+    },
     header: {
         alignItems: 'center',
         paddingVertical: 30
@@ -111,57 +127,75 @@ const styles = StyleSheet.create({
         marginBottom: -20,
         marginTop: -100
     },
+    button: {
+        backgroundColor: '#2C7DA0',
+        padding: 5,
+        borderRadius: 5,
+        alignItems: 'center',
+        marginTop: 20,
+        marginBottom: -5
+    },
+    buttonText: {
+        color: '#FFF',
+        fontWeight: 'bold',
+    },
     item: {
-        backgroundColor: '#C0C0C0',
+        backgroundColor: 'white',
         padding: 19,
         marginVertical: 7,
         marginHorizontal: 15,
         borderRadius: 19,
         borderWidth: 3,
-        borderColor: '#772B39',
+        borderColor: '#2C7DA0',
         marginTop: 30
     },
     textTitulo: {
         fontSize: 30,
-        color: 'white',
+        color: '#00000',
         marginLeft: 'auto',
         marginRight: 'auto',
     },
     textAutor: {
-        fontSize: 30,
-        color: 'white',
-        marginLeft: 'auto',
-        marginRight: 'auto',
+        fontSize: 20,
+        color: '#00000',
+        fontStyle: 'italic',
+        fontWeight: 'bold',
+        marginTop: 5,
     },
     textGenero: {
-        fontSize: 30,
-        color: 'white',
-        marginLeft: 'auto',
-        marginRight: 'auto',
+        fontSize: 20,
+        color: '#00000',
+        fontStyle: 'italic',
+        fontWeight: 'bold',
+        marginTop: 5,
     },
     textData: {
-        fontSize: 30,
-        color: 'white',
-        marginLeft: 'auto',
-        marginRight: 'auto',
+        fontSize: 15,
+        color: '#00000',
+        fontStyle: 'italic',
+        fontWeight: 'bold',
+        marginTop: 5,
     },
     textEditora: {
-        fontSize: 30,
-        color: 'white',
-        marginLeft: 'auto',
-        marginRight: 'auto',
+        fontSize: 15,
+        color: '#00000',
+        fontStyle: 'italic',
+        fontWeight: 'bold',
+        marginTop: 5,
     },
     textSinopse: {
-        fontSize: 30,
-        color: 'white',
-        marginLeft: 'auto',
-        marginRight: 'auto',
+        fontSize: 25,
+        color: '#00000',
+        fontStyle: 'italic',
+        fontWeight: 'bold',
+        marginTop: 5,
     },
     textAvaliacao: {
-        fontSize: 30,
-        color: 'white',
-        marginLeft: 'auto',
-        marginRight: 'auto',
+        fontSize: 20,
+        color: '#00000',
+        fontStyle: 'italic',
+        fontWeight: 'bold',
+        marginTop: 5,
     },
     image: {
         height: 100,
@@ -199,6 +233,9 @@ const styles = StyleSheet.create({
         marginTop: -8,
         marginLeft: 'auto',
         marginRight: 'auto'
+    },
+    menuList: {
+        flexGrow: 1
     },
 });
 export default Listagem;

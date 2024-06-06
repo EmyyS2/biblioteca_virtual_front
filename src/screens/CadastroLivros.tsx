@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { ScrollView, Image, StatusBar, StyleSheet, Text, TextInput, TouchableOpacity, View, ImageBackground } from "react-native";
 import Footer from "../components/Footer";
 import Head from "../components/Head";
+import HeadCadastro from "../components/headCadastro";
 
 const CadastroLivros: React.FC = () => {
     const [titulo, setTitulo] = useState<string>('');
@@ -81,7 +82,7 @@ const CadastroLivros: React.FC = () => {
 
 
             <StatusBar backgroundColor="#000000" barStyle="light-content" />
-            <Head />
+            <HeadCadastro />
 
             <View style={styles.header}>
                 <Image source={require('../assets/images/Icon.png')} style={styles.headerIcon} />
